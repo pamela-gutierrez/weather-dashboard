@@ -1,0 +1,14 @@
+.header {
+    background-color: red;
+    text-align: center;
+    padding: 10px;
+
+}
+
+.table-of-cities {
+    border: solid 1px;
+}
+
+.search-bar {
+    padding-bottom: 10px;
+}
