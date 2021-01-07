@@ -6,8 +6,48 @@ var cityList = [];
 // 2. add city to the current city big card
 // 3. set off ajax function to get api info
 // 4. Display 5 day forecast in cards
+var APIkey = "&units=imperial&appid=066a38838a31ae4c7d8440aef4adabcc";
+var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + "oakland" + APIkey;
+
+$.ajax({
+    url: queryURL,
+    method: "GET"
+})
+
+    // i++ is shorthand for i= i+1
+    .then(function (response) {
+        // response.list[]
+        for (var i = 0; i < response.list.length; i = i + 8) {
+            forecastCard(response.list[i])
+        }
+
+    })
 
 
+function forecastCard(info) {
+    console.log(info)
+    var newParentDiv = $("<div class='city-cards col-lg'>")
+    var cardTextDiv = $('<div class="card text-white bg-primary mb-3" style="max-width: 14rem;">')
+    var tempPtag = $('<p class="card-text">').text(info.main.temp)
+    var windPtag = $('<p class="card-text">Wind Speed:</p>').text(info.wind.speed)
+
+
+    cardTextDiv.append(tempPtag)
+    cardTextDiv.append(windPtag)
+    newParentDiv.append(cardTextDiv)
+    $("#forecast-row").append(newParentDiv)
+
+    // <div class="city-cards col-lg">
+    //     <div class="card text-white bg-primary mb-3" style="max-width: 14rem;">
+
+    //         <div class="card-body">
+    //             <p class="card-text">Some quick example text to build on the card title and make up the
+    //             bulk
+    //                                 of the card's content.</p>
+    //         </div>
+    //     </div>
+    // </div>
+}
 // SEARCH BUTTON
 $(".btn").on("click", function (event) {
     event.preventDefault()
@@ -24,13 +64,12 @@ $(".btn").on("click", function (event) {
         .then(function (response) {
             console.log(response);
 
-            // WHY ISN'T WIND SPEED WORKING?
             var wind = response.list[0].wind.speed;
             var humidity = response.list[0].main.humidity;
             var temp = response.list[0].main.temp;
 
+            $(".searched-city").append()
 
-            // $(userInputCity).append(".current-city-card");
             // How do I navigate through the 
             $(".city").html("<h1>" + userInputCity + "</h1>");
             $(".temp").html("<p>Temperature: " + temp + "</p>");
@@ -38,13 +77,12 @@ $(".btn").on("click", function (event) {
             $(".wind").html("<p>Wind Speed: " + wind + "</p>")
             $(".uv").html("<p>UV: " + "</p>")
 
-
-            // $(".wind").html("<p>Wind Speed: " + windSpeed + "</p>");
-            // $(".humidity").text("Humidity: " + response.main.humidity);
-            // $(".temp").text("Temperature (F) " + response.main.temp);
-
-
+            forecastCard()
         });
+
+
+
+    //LOCAL STORAGE
 
 
     //WHEN SEARCH BUTTON IS C: city search should-
