@@ -1,6 +1,10 @@
 // This is the array where I want to push searched cities into with the variable userInputCity.
 var cityList = [];
 
+if (cityList.length > 1) {
+
+}
+
 // This is the "filler" text
 var APIkey = "&units=imperial&appid=066a38838a31ae4c7d8440aef4adabcc";
 var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + "oakland" + APIkey;
@@ -75,22 +79,60 @@ $(".btn").on("click", function (event) {
             $(".temp").html("<p>Temperature: " + temp + " F°" + "</p>");
             $(".humidity").html("<p>Humidity: " + humidity + "%" + "</p>");
             $(".wind").html("<p>Wind Speed: " + wind + " MPH" + "</p>")
-            $(".uv").html("<p>UV: " + "</p>")
+
+
             $("#forecast-row").empty();
 
             for (var i = 0; i < response.list.length; i = i + 8) {
                 forecastCard(response.list[i])
 
             }
+
+            var newTableRow = $('<tr>').text(cityName);
+            $(".cities").append(newTableRow);
+
+            var lat = response.city.coord.lat;
+            var lon = response.city.coord.lon;
+            var APIkey = "066a38838a31ae4c7d8440aef4adabcc"
+            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey
+
+
+            $.ajax({
+                url: uvURL,
+                method: "GET"
+            })
+
+                .then(function (response) {
+                    console.log(response)
+                    var uvResult = response.value
+                    $(".uv").html("<p>UV: " + uvResult + "</p>")
+                })
+
+            if (uvResult < 2) {
+                uv.css('background-color', 'green');
+            } else if (result = 5) {
+                uv.css('background-color', 'yello');
+            } else if (result > 8) {
+                uv.css('background-color', 'red')
+            }
+
+
+            // $(".uv").text(uvResult)
+            // $(".uv").html("<p>UV: " + "</p>")
+
+
+
+
+
+            // newTableRow.click( //Your code here)
             // $(".cities").html("<tr>" + cityName + "<tr>")
-            $(".cities").append('<tr>', cityName)
+            // $(".cities").append('<tr>', cityName)
             // $(".cities").html("<tr>" + cityName + "<tr>")
             // $("tr").on("click", function () {
             //     ".current-city-card".append(cityName)
 
             // })
         });
-
 
 
 
