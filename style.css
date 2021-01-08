@@ -16,4 +16,9 @@
 .card {
     margin: 10px;
 }
-
+.card-body{
+    border: solid 1px;
+}
+/* .navbar{
+    text-align: center;
+} */
