@@ -1,11 +1,14 @@
-// This is the array where I want to push searched cities into with the variable userInputCity.
+// This is the array that will be populated by with city search history based on the userInputVariable. It will then be stringified so and go into the setItem part of the local storage so we can call it later. 
+// var city will temporarily be a string until we getItem and the parse method to once again turn that string into an object.
 var cityList = [];
 
-if (cityList.length > 1) {
 
-}
+// This was an attempt to set a default city for when the page loads. The idea was to say that if the div with the class of current-city-card is empty, display the information for Oakland. Otherwise, display the information for the userInputCity.
+// if ($('.current-city-card').is(':empty')) {
+// $(".current-city-card").show
 
-// This is the "filler" text
+
+// This is the "filler" text of Oakland
 var APIkey = "&units=imperial&appid=066a38838a31ae4c7d8440aef4adabcc";
 var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + "oakland" + APIkey;
 
@@ -18,6 +21,7 @@ $.ajax({
         for (var i = 0; i < response.list.length; i = i + 8) {
             forecastCard(response.list[i])
         }
+
 
     })
 
@@ -46,10 +50,6 @@ function forecastCard(info) {
 
 }
 
-// function searchedCityCard() {
-//     $(".cities").append(userInputCity)
-//     console.log(searchedCityCard)
-// }
 
 //This is the search button that populates the big card div
 $(".btn").on("click", function (event) {
@@ -118,86 +118,30 @@ $(".btn").on("click", function (event) {
                 uv.css('background-color', 'red')
             }
 
-
-
-
-
-
-
-
-            // $(".uv").text(uvResult)
-            // $(".uv").html("<p>UV: " + "</p>")
-
-
-
-
-
-            // newTableRow.click( //Your code here)
-            // $(".cities").html("<tr>" + cityName + "<tr>")
-            // $(".cities").append('<tr>', cityName)
-            // $(".cities").html("<tr>" + cityName + "<tr>")
-            // $("tr").on("click", function () {
-            //     ".current-city-card".append(cityName)
-
-            // })
         });
 
+    // This was intended to push city information gathered from the ajax call and push it into the searche city object to be called later by local storage. 
+    cityList.push(cityName)
 
 
 
-
-    // function citySearchHistory  
-    // cityList.push(cityName)
+    localStorage.setItem('history', JSON.stringify(cityList))
+    var storageItem = JSON.parse(localStorage.getItem('history'))
 
 
     //LOCAL STORAGE
 
 
-    //WHEN SEARCH BUTTON IS C: city search should-
-    // 1. Add city to history box
-    // 1.1 append city to search history box
-    // 1.1a create empty array and push search name city into array
 
-
-
-
-    // 2. Display current city in the weather in top upper card 
-    // 2.1 Display city name
-    // 2.2 display UV Index
-    // a. get value of UV index
-    // b. color code according to value 
-    // 2.3 display temperature
-    // 2.4 display humidity 
-    // 2.5 display windspeed
-    // 2.6 get weather icon from OpenApi (internal, we can use dot notation or traverse the DOM or something like that. )
-
-
-    // 3. Appear in current city card
-
-    // SHOULD APPEAR IN CURRENT CITY CARD:
-    // Temperature,, humidity, windspeed, and UV index.
-    // Current card should have temperature, humidity, wind speed, and UV index.
-    // 
-
-
-    // var cityHistoryBox = [];
-    // displayCityInfo
-    // display
 });
 
-// questions for Mahi:
-// Do I need a for loop to isolate things within the larger response object?
-// Help appending to the page
 
 
-// LOCAL STORAGE STUFF:
-
+// LOCAL STORAGE STUFF: How it shouuuuld work. 
 // var searchHistory = ['Pasadena', 'San Jose', 'Los Angeles']
 // //JSON.stringify for setting an item that isn't meant to be a string ex. saving an array or an object
 // localStorage.setItem('history', JSON.stringify(searchHistory))
 // // //JSON.parse for getting an item that is not meant to be a string ex. getting an array or an object (if left without parsing, this item would be a string)
 // var stoargeItem = JSON.parse(localStorage.getItem('history'))
-
-// // above is just a holding container when I store the value of whatever is inside, in this case the history of searchd cities.
 // console.log(stoargeItem[1])
 // // console.log(JSON.parse(parsedStoargeItem).first)
