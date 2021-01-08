@@ -108,6 +108,8 @@ $(".btn").on("click", function (event) {
                     $(".uv").html("<p>UV: " + uvResult + "</p>")
                 })
 
+            // These are conditional statements that should change the color of the uv index if the conditions are low, moderate, or extreme
+
             if (uvResult < 2) {
                 uv.css('background-color', 'green');
             } else if (result = 5) {
@@ -115,6 +117,12 @@ $(".btn").on("click", function (event) {
             } else if (result > 8) {
                 uv.css('background-color', 'red')
             }
+
+
+
+
+
+
 
 
             // $(".uv").text(uvResult)
